@@ -44,6 +44,16 @@
 | 5.2 | [Tradeoffs & Choosing ADT + DS](05_big_picture/02_tradeoffs_decision_guide.md) | Decision tree, test keyword → ADT table, when to choose each DS, classic tradeoff pairs, practice scenarios |
 | 5.3 | [Why It Matters: Cost - Time - Quality](05_big_picture/03_why_it_matters_cost_time_quality.md) | The equilateral triangle, how DSA choices affect each side, a justification template, worked examples |
 
+### 6. Pseudocode (read, trace, recognize, write)
+| # | Topic | What's inside |
+|---|---|---|
+| 6.1 | [Reading Pseudocode](06_pseudocode/01_reading_pseudocode.md) | Pseudocode → Python vocabulary, gotchas, trace tables, recursion call stacks, reading Big O off loops |
+| 6.2 | [Algorithm Fingerprints](06_pseudocode/02_algorithm_fingerprints.md) | Every core algorithm in pseudocode + the lines that give each one away |
+| 6.3 | [Writing Pseudocode](06_pseudocode/03_writing_pseudocode.md) | Recipe, building-block patterns (accumulator, counter, tracker, two pointers...), practice |
+| 6.4 | [Practice Problems](06_pseudocode/04_practice_problems.md) | Exam-style: trace it, name it, Big O, fill the blank, find the bug (answers included) |
+
+**Daily routine (20-30 min):** 1 trace problem on paper with a trace table → 1 "name it + Big O" → write 1 small function in pseudocode and trace your own work. After each session, write one mistake in the *My notes* section at the bottom of the file.
+
 ### Study List
 | Topic | What's inside |
 |---|---|
