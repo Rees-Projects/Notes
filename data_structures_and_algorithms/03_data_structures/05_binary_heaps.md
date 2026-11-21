@@ -1,4 +1,6 @@
-# Heaps & Priority Queues
+# Binary Heaps
+
+> **Layer:** Data structure | **Built from:** an array (viewed as a complete binary tree) | **Implements ADT:** [Priority Queue](../02_abstract_data_types/06_priority_queue.md) | **Also used by:** [Heap sort](../04_algorithms/01_sorting.md#6-heap-sort)
 
 ## What is a Heap?
 A **complete binary tree** that satisfies the **heap property**. Usually implemented as an **array** (efficient, no node pointers).
@@ -26,7 +28,7 @@ Root at index 0.
 | **Extract (pop min/max)** | O(log n) | Remove root, replace with last, bubble down |
 | **Build heap from array** | O(n) | Efficient (not n log n) |
 | **Heapify (sift up/down)** | O(log n) | Per node |
-| **Delete arbitrary** | O(log n) | Find + replace + bubble |
+| **Delete arbitrary** | O(n) find + O(log n) fix | O(log n) only if you already know its index |
 
 ## Python: heapq (Min-Heap Only)
 Python's `heapq` module is a **min-heap**. To simulate max-heap, push **negative** values (integers) or use tuples with negated keys.
@@ -57,9 +59,18 @@ print(-heapq.heappop(maxh))  # 10
 
 # Heap of tuples (for priority + value)
 pq = []
-heapq.heappush(pq, (1, "urgent"))      # priority 1 higher? min first
+heapq.heappush(pq, (1, "urgent"))      # smallest number pops first = highest priority
 heapq.heappush(pq, (3, "low"))
-heapq.heappush(pq, (1, "urgent2"))     # tie-breaker by second
+heapq.heappush(pq, (1, "urgent2"))     # tie on priority -> compares 2nd item ("urgent" < "urgent2")
+```
+
+**Tie-breaking gotcha:** on equal priorities Python compares the next tuple item. If that item can't be compared (e.g., dicts or custom objects), you get a `TypeError`. Fix: add an increasing counter as a tie-breaker.
+
+```python
+import itertools
+counter = itertools.count()
+heapq.heappush(pq, (1, next(counter), {"task": "a"}))
+heapq.heappush(pq, (1, next(counter), {"task": "b"}))  # counter breaks the tie, FIFO among equals
 ```
 
 ## Custom Min-Heap (for understanding)
@@ -106,22 +117,8 @@ class MinHeap:
     def size(self): return len(self.heap)
 ```
 
-## Priority Queue (Abstract)
-A data structure that retrieves elements by **priority**, not insertion order. Heaps are the most efficient way (O(log n) insert/extract-min/max vs O(n) unsorted list).
-
-**Behavior:** Highest priority removed first. Min-heap often used (smaller number = higher priority).
-
-## Priority Queue Use Cases
-- Dijkstra’s shortest path algorithm
-- Prim’s MST
-- Huffman coding (min-heap for frequencies)
-- A* pathfinding
-- Task scheduling (CPU jobs by priority)
-- Merge k sorted lists (use min-heap of heads)
-- Median maintenance, top-k elements
-
-## Example: Merge K Sorted Lists (Concept)
-Push heads of k lists into min-heap (O(k)), extract-min to build result, push next from that list (O(log k) per element) → total O(n log k), better than O(nk).
+## Priority Queue Connection
+A binary heap is the **data structure**. The Priority Queue is the **ADT** it implements. For the use cases, and for how a heap compares to array or BST implementations, see [Priority Queue](../02_abstract_data_types/06_priority_queue.md).
 
 ## Java Comparison
 - `PriorityQueue<Integer>` - Min-heap by default (natural order)
@@ -129,17 +126,23 @@ Push heads of k lists into min-heap (O(k)), extract-min to build result, push ne
 - Custom comparator for objects
 
 ## Heapsort
-Sorting algorithm using heap: build max-heap O(n), repeatedly extract-max to end O(n log n). In-place, O(1) extra space (excluding recursion), unstable. Not cache-best vs quicksort/mergesort usually.
+Sorting algorithm using heap: build max-heap O(n), repeatedly swap the max to the end and sift down, O(n log n). The **classic version** is in-place with O(1) extra space, and unstable. Usually slower in practice than quicksort (poor cache locality).
+
+The simple `heapq` version below is easy to write but **not** in-place: it builds a new list, so it uses **O(n) extra space**. Copying first (`h = list(arr)`) avoids destroying the caller's list.
 
 ```python
-def heapsort(arr):
-    import heapq
-    heapq.heapify(arr)  # min-heap O(n)
-    return [heapq.heappop(arr) for _ in range(len(arr))]  # O(n log n)
+import heapq
+
+def heapsort_simple(arr):
+    h = list(arr)          # copy - O(n) space, leaves arr untouched
+    heapq.heapify(h)       # min-heap O(n)
+    return [heapq.heappop(h) for _ in range(len(h))]  # O(n log n)
 ```
+
+Full in-place version: see [Sorting - Heap Sort](../04_algorithms/01_sorting.md#6-heap-sort).
 
 ## Key Takeaways
 - Heap = complete binary tree + heap property, array-backed
 - O(1) peek, O(log n) insert/pop
 - Min-heap (heapq) vs Max-heap (negate)
-- Perfect for priority queues, top-k, graph algorithms (Dijkstra)
+- The standard implementation of the Priority Queue ADT (top-k, Dijkstra, scheduling)

@@ -1,5 +1,7 @@
 # Linked Lists
 
+> **Layer:** Data structure | **Built from:** nodes + pointers | **Implements ADTs:** [List](../02_abstract_data_types/02_list.md), [Stack](../02_abstract_data_types/03_stack.md), [Queue / Deque](../02_abstract_data_types/04_queue_and_deque.md) | **Underlies:** separate chaining in hash tables
+
 ## What is a Linked List?
 A linear data structure where elements (nodes) are connected via pointers/references. Nodes not stored contiguously in memory (unlike arrays).
 
@@ -22,7 +24,8 @@ A linear data structure where elements (nodes) are connected via pointers/refere
 | Size | Fixed (static) or resizable cost | Dynamic, grows/shrinks easily |
 | Access | O(1) by index | O(n) (traverse from head) |
 | Insert/Delete (head) | O(n) | O(1) |
-| Insert/Delete (tail) | O(1) if end | O(1) with tail pointer |
+| Insert (tail) | O(1) if space | O(1) with tail pointer |
+| Delete (tail) | O(1) | O(n) singly (need prev), O(1) doubly |
 | Insert/Delete (middle) | O(n) (search+shift) | O(n) to find + O(1) to link |
 | Memory overhead | Less (just values) | More (values + pointers) |
 | Cache locality | Good (contiguous) | Poor (scattered) |
@@ -135,6 +138,32 @@ class LinkedList:
     
     def __str__(self):
         return " -> ".join(str(v) for v in self)
+```
+
+## Class Version - append / append_node
+`append(item)` wraps the raw value in a new node, then hands it to `append_node`. `append_node` checks whether the list is **empty** (`head is None`): if so, the new node becomes both head and tail; otherwise it links after the current tail and becomes the new tail. O(1) because of the tail pointer.
+
+```python
+class SinglyLinkedNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def append(self, item):
+        self.append_node(SinglyLinkedNode(item))
+
+    def append_node(self, new_node):
+        if self.head is None:        # empty list
+            self.head = new_node
+            self.tail = new_node
+        else:                        # link after current tail
+            self.tail.next = new_node
+            self.tail = new_node
 ```
 
 ## Java Comparison (Singly Concept)

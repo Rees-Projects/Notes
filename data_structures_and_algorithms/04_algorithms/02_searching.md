@@ -105,6 +105,7 @@ Works on sorted array. Jump ahead by fixed step `k = sqrt(n)`, find block contai
 import math
 def jump_search(arr, target):
     n=len(arr)
+    if n == 0: return -1  # guard: arr[-1] below would crash on empty input
     step=int(math.sqrt(n))
     prev=0
     while arr[min(step,n)-1] < target:

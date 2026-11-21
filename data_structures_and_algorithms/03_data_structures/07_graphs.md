@@ -1,4 +1,6 @@
-# Graphs - Basics
+# Graphs
+
+> **Layer:** Graph is an ADT (vertices + edges) | **Data structures:** adjacency list (array/dict of lists), adjacency matrix (2D array), edge list | **Traversal uses:** [Queue](../02_abstract_data_types/04_queue_and_deque.md) for BFS, [Stack](../02_abstract_data_types/03_stack.md) for DFS, [Set](../02_abstract_data_types/05_set_and_map.md) for visited
 
 ## What is a Graph?
 A collection of **vertices (nodes)** and **edges (links)** connecting them. Can be directed/undirected, weighted/unweighted, cyclic/acyclic.
@@ -44,7 +46,7 @@ Array/list of lists: `graph[u]` contains neighbors v.
 List of (u,v,weight) tuples.
 
 - **Space:** O(E)
-- **Good for:** MST algorithms (Krusky’s) - sort edges
+- **Good for:** MST algorithms (Kruskal’s) - sort edges
 
 ## Python - Adjacency List Examples
 
@@ -213,6 +215,29 @@ def has_cycle_undirected(graph):
 
 ### Directed Graph
 Cycle detection via DFS with **3 states** (unvisited, visiting/in-stack, visited) or **Kahn’s algorithm** for topological (count indegrees).
+
+A cycle exists if DFS reaches a node that is still **VISITING** (on the current path) - that is a back edge. (The undirected "not parent" trick doesn't work here: in a directed graph, reaching an already-**DONE** node is not a cycle.)
+
+```python
+def has_cycle_directed(graph):
+    UNVISITED, VISITING, DONE = 0, 1, 2
+    state = {node: UNVISITED for node in graph}
+
+    def dfs(node):
+        state[node] = VISITING
+        for nbr in graph.get(node, []):
+            if state.get(nbr, UNVISITED) == VISITING:
+                return True                      # back edge -> cycle
+            if state.get(nbr, UNVISITED) == UNVISITED and dfs(nbr):
+                return True
+        state[node] = DONE
+        return False
+
+    return any(state[n] == UNVISITED and dfs(n) for n in graph)
+
+assert has_cycle_directed({'A': ['B'], 'B': ['C'], 'C': ['A']})
+assert not has_cycle_directed({'A': ['B', 'C'], 'B': ['C'], 'C': []})
+```
 
 ## BFS vs DFS
 

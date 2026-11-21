@@ -1,4 +1,8 @@
-# Arrays & Lists
+# Arrays & Dynamic Arrays
+
+> **Layer:** Data structure | **Built from:** contiguous memory | **Implements ADTs:** [List](../02_abstract_data_types/02_list.md), [Stack](../02_abstract_data_types/03_stack.md) (dynamic array), Queue (as a circular array) | **Underlies:** hash tables, binary heaps
+>
+> Python `list` = **dynamic array** (data structure), which implements the **List ADT**. See [Need to Study](../NEED_TO_STUDY.md#1-list-vs-array---and-how-stacks--queues-use-them).
 
 ## Arrays
 A fixed-size, contiguous block of memory holding elements of same type. Supports **O(1)** random access by index.
@@ -50,26 +54,7 @@ for i, n in enumerate(nums):
     print(i, n)
 ```
 
-**Linear search (unsorted):**
-```python
-def linear_search(arr, target):
-    for i, val in enumerate(arr):
-        if val == target:
-            return i
-    return -1  # O(n)
-```
-
-**Binary search (sorted):**
-```python
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target: return mid
-        elif arr[mid] < target: left = mid + 1
-        else: right = mid - 1
-    return -1  # O(log n)
-```
+**Searching:** Linear search O(n) (unsorted) and binary search O(log n) (sorted) are covered in [Searching](../04_algorithms/02_searching.md).
 
 **Two pointers example (reverse):**
 ```python

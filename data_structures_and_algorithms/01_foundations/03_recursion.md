@@ -76,14 +76,21 @@ def fib_iter(n):
 ```python
 def sum_arr(arr):
     if not arr: return 0  # base
-    return arr[0] + sum_arr(arr[1:])  # O(n)
+    return arr[0] + sum_arr(arr[1:])
+```
+**Watch out:** `arr[1:]` copies the rest of the list on every call (O(n) each), so this is **O(n²) time and O(n²) space** overall - not O(n). Pass an index instead to get O(n) time (O(n) stack space):
+
+```python
+def sum_arr_idx(arr, i=0):
+    if i == len(arr): return 0  # base
+    return arr[i] + sum_arr_idx(arr, i + 1)  # O(n) time, O(n) stack
 ```
 
 ### Reverse String
 ```python
 def reverse_str(s):
     if len(s) <= 1: return s
-    return reverse_str(s[1:]) + s[0]
+    return reverse_str(s[1:]) + s[0]  # O(n²) - slicing + concatenation copy each call
 ```
 
 ### Count Down

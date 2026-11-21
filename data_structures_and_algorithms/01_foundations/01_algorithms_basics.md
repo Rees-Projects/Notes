@@ -28,21 +28,7 @@ An **Abstract Data Type (ADT)** defines **what operations can be performed** on 
 
 **Example:** A "List" ADT specifies operations like `get(i)`, `insert(i, value)`, `remove(i)`, `size()`. Arrays and Linked Lists are different *data structures* that can both implement the List ADT.
 
-## Common Abstract Data Types
-
-| ADT | Description | Core Operations | Common Implementations |
-|---|---|---|---|
-| **List** | Ordered collection of elements (sequence) | get, set, insert, remove, append, size, is_empty | Array (static), Dynamic Array/List (Python list, ArrayList), Linked List |
-| **Dynamic Array** | Resizable array (list with automatic growth) | get, set, append, insert, remove, size, capacity, is_empty | Array with resizing (doubling), Python list, Java ArrayList |
-| **Bag (Multiset)** | Unordered collection that allows duplicates | add, remove, contains, count/frequency, size, is_empty | Dynamic Array, Linked List, Hash Table (to track counts) |
-| **Stack** | LIFO (Last-In-First-Out) collection | push, pop, peek/top, size, is_empty | List, Array, Linked List, Deque |
-| **Queue** | FIFO (First-In-First-Out) collection | enqueue, dequeue, front/peek, size, is_empty | Array, Linked List, Circular Queue, Deque |
-| **Deque** | Double-ended queue (add/remove from both ends) | push_front, push_back, pop_front, pop_back, peek_front, peek_back | Linked List, Array-based Deque |
-| **Set** | Collection of unique elements (no duplicates) | add, remove, contains, size, union, intersection | Hash Set, Tree Set, Bitmask |
-| **Map/Dictionary** | Key-value pairs (associative array) | put(key,value), get(key), remove(key), contains(key), keys, values | Hash Table (HashMap/Dict), Tree Map (sorted), BST |
-| **Priority Queue** | Elements with priorities, highest priority served first | insert, extract_min/max, peek, size, is_empty | Binary Heap, Fibonacci Heap |
-| **Tree** | Hierarchical structure (nodes with parent-child) | root, children, parent, insert, delete, traverse | Binary Tree, BST, AVL, Red-Black, Trie |
-| **Graph** | Collection of vertices and edges | add_vertex, add_edge, remove_edge, neighbors, traverse (BFS/DFS) | Adjacency List, Adjacency Matrix, Edge List |
+The full table of common ADTs and the data structures that implement them is in [ADT Overview](../02_abstract_data_types/01_adt_overview.md).
 
 ## How to Describe Algorithms
 - Natural language

@@ -16,8 +16,8 @@ Arranging elements in a specific order (ascending/descending). Tradeoffs: time, 
 | **Bubble Sort** | O(n) | O(n²) | O(n²) | O(1) | Yes | Yes | Simple, adaptive (if optimized) |
 | **Selection Sort** | O(n²) | O(n²) | O(n²) | O(1) | No | Yes | Min find + swap, few swaps |
 | **Insertion Sort** | O(n) | O(n²) | O(n²) | O(1) | Yes | Yes | Great for small/mostly sorted |
-| **Merge Sort** | O(n log n) | O(n log n) | O(n log n) | O(n) | Yes | No* | Divide & Conquer, stable, predictable |
-| **Quick Sort** | O(n log n) | O(n log n) | O(n²) | O(log n) avg | No | Yes | Pivot choice critical, fast in practice |
+| **Merge Sort** | O(n log n) | O(n log n) | O(n log n) | O(n) | Yes | No* | Divide & Conquer, stable, predictable (*can be done in O(1) extra space on linked lists) |
+| **Quick Sort** | O(n log n) | O(n log n) | O(n²) | O(log n) avg, O(n) worst | No | Yes | Pivot choice critical, fast in practice |
 | **Heap Sort** | O(n log n) | O(n log n) | O(n log n) | O(1) | No | Yes | Heap-based, no recursion deep issues |
 | **Counting Sort** | O(n+k) | O(n+k) | O(n+k) | O(k+n) | Yes | No | Non-comparison, integers 0..k |
 | **Radix Sort** | O(d(n+k)) | O(d(n+k)) | O(d(n+k)) | O(n+k) | Yes | No | Sort by digits, d passes |
@@ -134,17 +134,37 @@ def partition(arr,l,r):
 ## 6. Heap Sort
 Use max-heap, extract max repeatedly to end.
 
+**In-place (true O(1) extra space):**
 ```python
-import heapq
-
 def heap_sort(arr):
-    # max-heap via negation
-    h = [-x for x in arr]
-    heapq.heapify(h)
-    return [-heapq.heappop(h) for _ in range(len(h))]  # O(n log n), O(n) for copy
+    n = len(arr)
+
+    def sift_down(i, size):
+        while True:
+            largest = i
+            l, r = 2*i + 1, 2*i + 2
+            if l < size and arr[l] > arr[largest]: largest = l
+            if r < size and arr[r] > arr[largest]: largest = r
+            if largest == i: return
+            arr[i], arr[largest] = arr[largest], arr[i]
+            i = largest
+
+    for i in range(n // 2 - 1, -1, -1):   # build max-heap O(n)
+        sift_down(i, n)
+    for end in range(n - 1, 0, -1):       # move max to the end, shrink heap
+        arr[0], arr[end] = arr[end], arr[0]
+        sift_down(0, end)
+    return arr  # O(n log n), O(1) extra, not stable
 ```
 
-Or in-place max-heap logic. Native heapq gives easy form.
+**Simple heapq version** (easy, but O(n) extra space for the new list):
+```python
+import heapq
+def heap_sort_simple(arr):
+    h = list(arr)
+    heapq.heapify(h)
+    return [heapq.heappop(h) for _ in range(len(h))]
+```
 
 ## When to Use Which?
 

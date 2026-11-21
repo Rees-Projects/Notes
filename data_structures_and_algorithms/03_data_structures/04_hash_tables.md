@@ -1,4 +1,6 @@
-# Hash Tables (Dictionaries/Maps)
+# Hash Tables
+
+> **Layer:** Data structure | **Built from:** an array of buckets + a hash function | **Implements ADTs:** [Map / Dictionary, Set](../02_abstract_data_types/05_set_and_map.md), Bag (counts) | Python `dict`/`set`, Java `HashMap`/`HashSet`
 
 ## What is a Hash Table?
 A data structure that maps **keys → values** using a **hash function**. Provides average **O(1)** lookup, insertion, deletion.

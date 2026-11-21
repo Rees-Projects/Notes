@@ -1,4 +1,6 @@
-# Trees - Introduction
+# Trees
+
+> **Layer:** Tree is an ADT (hierarchy) **and** a family of data structures | **Built from:** nodes + pointers (or an array for complete trees, like heaps) | **BST implements:** sorted [Map / Set](../02_abstract_data_types/05_set_and_map.md) | **Binary heap** (a tree in an array): see [Binary Heaps](05_binary_heaps.md)
 
 ## What is a Tree?
 A **non-linear**, hierarchical data structure with nodes connected by edges. Has a **root**, parent-child relationships, and no cycles (acyclic connected graph for general trees).
